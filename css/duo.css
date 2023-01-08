@@ -1,0 +1,99 @@
+* {
+  margin: 0;
+  padding: 0;
+  user-select: none;
+  cursor: url(../cursor/arrow2.ico), default;
+}
+
+@media screen and (max-width: 500px) {
+  .ver,
+  .tip,
+  .github,
+  .bili {
+    display: none;
+  }
+  .refresh {
+    margin-right: 20%;
+  }
+}
+
+body {
+  background: #f1e4f3;
+}
+#head {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 80px;
+  background-color: #43278c;
+}
+.txt {
+  color: #fff;
+  font-size: 32px;
+}
+.side {
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  padding-right: 4%;
+}
+.sideL {
+  justify-content: flex-start;
+  padding-left: 4%;
+  padding-right: 0;
+}
+.ver {
+  color: #fff;
+  font-size: 26px;
+}
+
+.btn {
+  position: relative;
+  margin-left: 24px;
+}
+.btn a {
+  display: block;
+  width: 40px;
+  height: 40px;
+}
+.icon {
+  width: 40px;
+  height: 40px;
+}
+.word {
+  display: none;
+  position: absolute;
+  top: 62px;
+  left: -120px;
+  width: 200px;
+  padding: 12px 20px;
+  background-color: #fe7c73;
+  color: #fff;
+  z-index: 3;
+}
+.tip:hover > .word {
+  display: block;
+}
+#duo {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  flex-wrap: nowrap;
+  width: 100%;
+  padding: 30px 5%;
+  box-sizing: border-box;
+}
+.column {
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+}
+.wrap {
+  width: 300px;
+  margin-bottom: 16px;
+}
+#frames img {
+  width: 300px;
+}

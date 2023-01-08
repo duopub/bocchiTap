@@ -1,0 +1,15 @@
+lockfileVersion: 5.3
+
+specifiers:
+  x-gif: ^1.0.5
+
+dependencies:
+  x-gif: registry.npmmirror.com/x-gif/1.0.5
+
+packages:
+
+  registry.npmmirror.com/x-gif/1.0.5:
+    resolution: {integrity: sha512-yosIeeWh1sPP6wyfEiJwDuV/O+jd3Cxu+gCTkVLiL+z7wG3x8Njr/lFB7bCS9sRA7Jzy9ORlzLol+6Swv4TBRA==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/x-gif/-/x-gif-1.0.5.tgz}
+    name: x-gif
+    version: 1.0.5
+    dev: false
