@@ -10,7 +10,7 @@
 
 地址 1：http://aozozo.com/bocchiTap/ （推荐，#服务器将在 2023 年 3 月中旬到期，届时将无法访问）
 
-地址 2：http://bocchitap.duo.pub/
+地址 2：http://bocchitap.duo.pub/ （加载较慢，加载时间是地址 1 的三倍）
 
 ### 考虑加入的功能：
 

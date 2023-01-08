@@ -38,7 +38,7 @@
                 </svg>
             </div>
             <div class="btn github">
-                <a href="">
+                <a href="https://github.com/duopub/bocchiTap">
                     <svg t="1673161554026" class="icon" viewBox="0 0 1024 1024" version="1.1"
                         xmlns="http://www.w3.org/2000/svg" p-id="3494" width="40" height="40">
                         <path
@@ -62,7 +62,18 @@
     <div id="duo">
     </div>
     <script>
-        const duoCode = (reload = false) => {
+        const TOTALPIC = 33
+        const getRandomArr = (len) => {
+            let arr = [];
+            while (arr.length < len) {
+                const num = Math.floor((TOTALPIC) * Math.random() + 1);;
+                if (arr.indexOf(num) === -1) arr.push(num);
+            }
+            return arr;
+        }
+        let picArr = getRandomArr(10)
+
+        const duoCode = (reload = false, resize = false) => {
             if (reload) $("#duo").find("*").remove();
             const singleWidth = 300
             const fullWidth = $("#duo").width() > singleWidth ? $("#duo").width() : singleWidth
@@ -73,16 +84,7 @@
             $("#duo").append($(columnDOM.join('')))
             $('#duo').css('padding', `30px ${restSpace / 2}px`)
 
-            const TOTALPIC = 33
-            const getRandomArr = (len) => {
-                let arr = [];
-                while (arr.length < len) {
-                    const num = Math.floor((TOTALPIC) * Math.random() + 1);;
-                    if (arr.indexOf(num) === -1) arr.push(num);
-                }
-                return arr;
-            }
-            const picArr = getRandomArr(10)
+            if (!resize) picArr = getRandomArr(10)
 
             Array(10).fill('').forEach((_, index) => {
                 const targetColumn = `#column${(index) % numbersOfLine}`
@@ -97,7 +99,7 @@
         }
         duoCode()
         $('.refresh').click(() => duoCode(true))
-        $(window).resize(() => duoCode(true));
+        $(window).resize(() => duoCode(true, true));
     </script>
 </body>
 
