@@ -16,10 +16,13 @@
 <body>
     <div id="head">
         <div class="side sideL">
-            <div class="ver">Ver 1.0</div>
+            <div class="ver">Ver 1.1</div>
         </div>
         <p class="txt">波奇戳戳</p>
         <div class="side">
+            <div class="btn upload" title="自定义模式">
+                <img class="icon uplodIcon" src="./icon/upload.png" />
+            </div>
             <div class="btn tip">
                 <svg t="1673162437422" class="icon" viewBox="0 0 1024 1024" version="1.1"
                     xmlns="http://www.w3.org/2000/svg" p-id="6277" width="40" height="40">
@@ -59,47 +62,77 @@
             </div>
         </div>
     </div>
-    <div id="duo">
-    </div>
+    <div id="duo" />
+
     <script>
+        const prefix = 'http://cdn.duo.pub/'
         const TOTALPIC = 33
+        const speedList = ['0.5', '1.0', '2.0', '3.0', '5.0', '8.0']
+        let freeMode = false
+        // 生成随机N张图片、返回一个数组
         const getRandomArr = (len) => {
             let arr = [];
             while (arr.length < len) {
-                const num = Math.floor((TOTALPIC) * Math.random() + 1);;
+                const num = Math.floor((TOTALPIC) * Math.random() + 1);
                 if (arr.indexOf(num) === -1) arr.push(num);
             }
             return arr;
         }
         let picArr = getRandomArr(10)
+        const speedBtns = speedList.map(speed => `<div class='speed'>${speed}X</div>`).join('')
+        $('.upload').click(() => { freeMode = !freeMode; duoCode(freeMode, !freeMode) })
 
-        const duoCode = (reload = false, resize = false) => {
-            if (reload) $("#duo").find("*").remove();
-            const singleWidth = 300
-            const fullWidth = $("#duo").width() > singleWidth ? $("#duo").width() : singleWidth
-            const numbersOfLine = Math.floor(fullWidth / singleWidth)
-            const restSpace = fullWidth - singleWidth * numbersOfLine - 16 * (numbersOfLine - 1) > 0 ? fullWidth - singleWidth * numbersOfLine - 16 * (numbersOfLine - 1) : fullWidth % singleWidth
-            const columnDOM = Array(numbersOfLine).fill('').map((_, index) => `<div id="column${index}" class="column"></div>`)
+        const duoCode = (freeMode = false, reload = false, resize = false) => {
+            // 自定义模式
+            if (freeMode) {
+                if (resize) return
+                $("#duo").find("*").remove();
+                $('.word').text('随机模式会在图库中随机生成一张，自定义模式选择本地图片进行播放，倍速可调节。')
+                $('#duo').height($(window).height() - 200)
+                $("#duo").html(`<div class="box"><div class="speedBtns">${speedBtns}</div><div class="preview"><div class="pre preT">随机模式</div><div class="pre preB" >自定义模式</div><input type="file" id="file" accept="image/gif" /></div></div>`)
+                $("#file").change((e) => {
+                    const file = $('#file').prop('files')[0]
+                    if (file) {
+                        let reader = new FileReader()
+                        reader.onload = (e) => $('.preview').html(`<x-gif class='previewGif' src=${e?.target?.result} speed="3.0" />`)
+                        reader.readAsDataURL(file);
+                    };
+                });
+                $('.preT').click(() => $('.preview').html(`<x-gif class='previewGif' src='${prefix}b${getRandomArr(1)[0]}.gif' speed="3.0" />`))
+                $('.speed').click(function () { $('.previewGif').attr('speed', $(this).text()?.substr(0, 3)) })
+            }
+            // 非自定义模式
+            if (!freeMode) {
+                if (reload) $("#duo").find("*").remove();
+                $('.word').text('点击图片进行倍速播放，再次点击恢复初始的速度，点击刷新图标可以进行图片的刷新。')
+                const singleWidth = 300
+                const fullWidth = $("#duo").width() > singleWidth ? $("#duo").width() : singleWidth
+                const numbersOfLine = Math.floor(fullWidth / singleWidth)
+                const restSpace = fullWidth - singleWidth * numbersOfLine - 16 * (numbersOfLine - 1) > 0 ? fullWidth - singleWidth * numbersOfLine - 16 * (numbersOfLine - 1) : fullWidth % singleWidth
+                const columnDOM = Array(numbersOfLine).fill('').map((_, index) => `<div id="column${index}" class="column"></div>`)
 
-            $("#duo").append($(columnDOM.join('')))
-            $('#duo').css('padding', `30px ${restSpace / 2}px`)
+                $("#duo").append($(columnDOM.join('')))
+                $('#duo').css('padding', `30px ${restSpace / 2}px`)
 
-            if (!resize) picArr = getRandomArr(10)
+                if (!resize) picArr = getRandomArr(10)
 
-            Array(10).fill('').forEach((_, index) => {
-                const targetColumn = `#column${(index) % numbersOfLine}`
-                $(targetColumn).append(`<div id="wrap${index}" class="wrap" speed="1"><x-gif class="img" src="./img/b${picArr[index]}.gif" speed="1.0"></x-gif></div>`)
+                Array(10).fill('').forEach((_, index) => {
+                    const targetColumn = `#column${(index) % numbersOfLine}`
+                    $(targetColumn).append(`<div id="wrap${index}" class="wrap" speed="1"><x-gif class="img" src="${prefix}b${picArr[index]}.gif" speed="1.0"></x-gif></div>`)
 
-                $(`#wrap${index}`).click(() => {
-                    const curSpeed = $(`#wrap${index}`).attr("speed")
-                    $(`#wrap${index}`).attr('speed', curSpeed === '1' ? '3' : '1')
-                    $(`#wrap${index}`).html(`<x-gif class="img" src="./img/b${picArr[index]}.gif" speed="${curSpeed === '1' ? '3' : '1'}.0"></x-gif>`)
+                    $(`#wrap${index}`).click(() => {
+                        const curSpeed = $(`#wrap${index}`).attr("speed")
+                        $(`#wrap${index}`).attr('speed', curSpeed === '1' ? '3' : '1')
+                        $(`#wrap${index}`).html(`<x-gif class="img" src="${prefix}b${picArr[index]}.gif" speed="${curSpeed === '1' ? '3' : '1'}.0"></x-gif>`)
+                    })
                 })
-            })
+            }
         }
         duoCode()
-        $('.refresh').click(() => duoCode(true))
-        $(window).resize(() => duoCode(true, true));
+
+        $('.refresh').click(() => duoCode(freeMode, true))
+        $(window).resize(() => duoCode(freeMode, true, true));
+
     </script>
 </body>
 

@@ -15,12 +15,17 @@
   .refresh {
     margin-right: 20%;
   }
+  .btn.upload {
+    position: absolute;
+    left: 4%;
+  }
 }
 
 body {
   background: #f1e4f3;
 }
 #head {
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -96,4 +101,87 @@ body {
 }
 #frames img {
   width: 300px;
+}
+
+.box {
+  width: 100%;
+  height: 100%;
+}
+
+.speedBtns {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: nowrap;
+  max-width: 100%;
+  margin-bottom: 24px;
+  overflow: scroll;
+}
+.speedBtns::-webkit-scrollbar {
+  width: 0 !important;
+  height: 0;
+}
+.speed {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 16%;
+  padding: 6px 36px;
+  /* background-color: #fffa61; */
+  background: linear-gradient(
+    -70deg,
+    transparent,
+    transparent 10%,
+    #fffa61 10%,
+    #fffa61 90%,
+    transparent 90%
+  );
+  color: #000000;
+  font-size: 18px;
+}
+
+.preview {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  /* background-color: #ccc; */
+}
+.pre {
+  position: absolute;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 50%;
+  color: #fff;
+  font-size: 32px;
+}
+.preT {
+  top: 0;
+  background-color: #f8acbb;
+}
+.preB {
+  bottom: 0;
+  background-color: #cd5b52;
+}
+#file {
+  opacity: 0;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 50%;
+  /* background-color: #ccc; */
+}
+.previewGif {
+  position: relative;
+  width: 100%;
+  height: 90vw;
+  z-index: 2;
+}
+.box #frames img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 }
